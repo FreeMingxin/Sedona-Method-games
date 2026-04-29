@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>🧘 圣多纳释放法 · 三步骤引导</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', 'Noto Serif SC', 'PingFang SC', system-ui, sans-serif;
+      padding: 12px;
+    }
+    .container {
+      max-width: 420px;
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 28px 22px 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    h1 {
+      text-align: center;
+      color: #e2c48b;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #8899bb;
+      font-size: 0.85rem;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334466;
+      transition: all 0.4s;
+    }
+    .step-dot.active {
+      background: #e2c48b;
+      box-shadow: 0 0 12px #e2c48b88;
+      transform: scale(1.3);
+    }
+    .step-dot.done {
+      background: #5a8a6a;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 24px 18px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.5s;
+    }
+    .step-title {
+      color: #e2c48b;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
+    .step-question {
+      color: #ccd6e0;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .emotion-hint {
+      color: #8899bb;
+      font-size: 0.8rem;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      color: #e0e6f0;
+      font-size: 0.95rem;
+      padding: 12px;
+      resize: vertical;
+      min-height: 70px;
+      font-family: inherit;
+      line-height: 1.6;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #e2c48b;
+      box-shadow: 0 0 10px rgba(226,196,139,0.2);
+    }
+    textarea::placeholder {
+      color: #556688;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    button {
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #e2c48b, #c9a36e);
+      color: #1a1a2e;
+      box-shadow: 0 6px 18px rgba(226,196,139,0.25);
+    }
+    .btn-primary:active {
+      transform: scale(0.96);
+      opacity: 0.9;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #ccd6e0;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-secondary:active {
+      background: rgba(255,255,255,0.14);
+      transform: scale(0.96);
+    }
+    .btn-small {
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      letter-spacing: 0.5px;
+    }
+    .release-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+    .release-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .progress-text {
+      color: #8899bb;
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 12px;
+    }
+    .session-log {
+      margin-top: 14px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 14px;
+      padding: 12px 14px;
+      max-height: 100px;
+      overflow-y: auto;
+    }
+    .session-log .log-title {
+      color: #8899bb;
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .log-item {
+      color: #aabbcc;
+      font-size: 0.72rem;
+      line-height: 1.5;
+      padding: 2px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🌿 圣多纳释放法</h1>
+  <p class="subtitle">三步骤 · 简洁释放引导</p>
+  
+  <div class="step-indicator" id="stepDots">
+    <div class="step-dot active"></div>
+    <div class="step-dot"></div>
+    <div class="step-dot"></div>
+  </div>
+  
+  <div class="card" id="cardArea"></div>
+  
+  <div class="btn-group" id="btnArea"></div>
+  
+  <p class="progress-text" id="progressText">步骤 1 / 3</p>
+  
+  <div class="session-log" id="sessionLog">
+    <div class="log-title">📝 本次练习记录</div>
+    <div id="logContent">
+      <span style="color:#556688;">等待开始…</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const steps = [
+      {
+        title: '第一步 · 向内觉察',
+        question: '任何时候，把注意力带回内在。\n\n此刻，你的内在正在发生什么？\n有什么感受、情绪、或身体感觉吗？\n\n只是观察，无需分析或评判。\n像一个温柔的见证者。',
+        hint: '可以是身体的紧绷、一种情绪、或重复的念头',
+        showTextarea: true,
+        placeholder: '例如：肩膀有些紧，心里有点不安…'
+      },
+      {
+        title: '第二步 · 看见想要',
+        question: '此刻，你在想要或不想要什么？\n\n可能是想要控制、想要安全、\n想要被认可，或是想要推开什么。\n\n诚实地看见这份"想要"，\n它是释放的关键线索。',
+        hint: '常见的：想要被爱 / 不想要这种焦虑 / 想要事情改变',
+        showTextarea: true,
+        placeholder: '例如：我想要这个担忧消失…'
+      },
+      {
+        title: '第三步 · 允许它吗',
+        question: '你能允许这份"想要"就在此刻存在吗？\n\n不是赞同它，不是跟着它走，\n只是允许它如其所是。\n\n允许，就是释放的开始。\n\n此刻，你愿意允许它吗？',
+        hint: '允许 ≠ 屈服，而是停止内在的对抗',
+        showTextarea: false,
+        options: [
+          { text: '是的，我允许它', value: 'allowed' },
+          { text: '我愿意尝试允许', value: 'trying' },
+          { text: '现在还有些困难', value: 'difficult' }
+        ]
+      }
+    ];
+    
+    let currentStep = 0;
+    let sessionLog = [];
+    const totalSteps = steps.length;
+    
+    const stepDots = document.getElementById('stepDots');
+    const cardArea = document.getElementById('cardArea');
+    const btnArea = document.getElementById('btnArea');
+    const progressText = document.getElementById('progressText');
+    const logContent = document.getElementById('logContent');
+    
+    function updateDots() {
+      const dots = stepDots.querySelectorAll('.step-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.remove('active', 'done');
+        if (i < currentStep) dot.classList.add('done');
+        if (i === currentStep) dot.classList.add('active');
+      });
+    }
+    
+    function addLog(msg) {
+      const time = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      sessionLog.push({ time, msg });
+      renderLog();
+    }
+    
+    function renderLog() {
+      if (sessionLog.length === 0) {
+        logContent.innerHTML = '<span style="color:#556688;">等待开始…</span>';
+        return;
+      }
+      logContent.innerHTML = sessionLog.slice(-8).map(l => 
+        `<div class="log-item">🕐 ${l.time} · ${l.msg}</div>`
+      ).join('');
+    }
+    
+    function renderStep() {
+      const step = steps[currentStep];
+      updateDots();
+      progressText.textContent = `步骤 ${currentStep + 1} / ${totalSteps}`;
+      
+      let html = `
+        <div class="step-title">${step.title}</div>
+        <div class="step-question">${step.question.replace(/\n/g, '<br>')}</div>
+        ${step.hint ? `<div class="emotion-hint">💡 ${step.hint}</div>` : ''}
+      `;
+      
+      if (step.showTextarea) {
+        html += `<textarea id="emotionInput" placeholder="${step.placeholder || '写下你的感受…'}"></textarea>`;
+      }
+      
+      cardArea.innerHTML = html;
+      
+      btnArea.innerHTML = '';
+      
+      if (step.showTextarea) {
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'btn-primary';
+        confirmBtn.textContent = '确认并继续 →';
+        confirmBtn.addEventListener('click', () => {
+          const input = document.getElementById('emotionInput').value.trim();
+          if (input) {
+            addLog(`${step.title.replace(/.*· /,'')}：${input}`);
+          } else {
+            addLog(`${step.title.replace(/.*· /,'')}：感受到了（未描述）`);
+          }
+          currentStep++;
+          if (currentStep >= totalSteps) {
+            finishSession();
+          } else {
+            renderStep();
+          }
+        });
+        btnArea.appendChild(confirmBtn);
+        
+        const skipBtn = document.createElement('button');
+        skipBtn.className = 'btn-secondary btn-small';
+        skipBtn.textContent = '继续下一步';
+        skipBtn.addEventListener('click', () => {
+          addLog(`${step.title.replace(/.*· /,'')}：已觉察（跳过记录）`);
+          currentStep++;
+          if (currentStep >= totalSteps) {
+            finishSession();
+          } else {
+            renderStep();
+          }
+        });
+        btnArea.appendChild(skipBtn);
+      } else if (step.options) {
+        step.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'btn-primary release-btn';
+          
+          if (opt.value === 'allowed') {
+            btn.style.background = 'rgba(90,138,106,0.3)';
+            btn.style.color = '#a0d8a8';
+            btn.style.border = '1px solid rgba(90,138,106,0.5)';
+          } else if (opt.value === 'trying') {
+            btn.style.background = 'rgba(180,160,120,0.25)';
+            btn.style.color = '#d8c890';
+            btn.style.border = '1px solid rgba(180,160,120,0.4)';
+          } else if (opt.value === 'difficult') {
+            btn.style.background = 'rgba(180,120,120,0.25)';
+            btn.style.color = '#d4a0a0';
+            btn.style.border = '1px solid rgba(180,120,120,0.4)';
+          }
+          
+          btn.textContent = opt.text;
+          btn.addEventListener('click', () => {
+            addLog(`选择：${opt.text}`);
+            
+            if (opt.value === 'allowed' || opt.value === 'trying') {
+              addLog('🌿 释放发生——允许即是放下');
+              finishSession();
+            } else if (opt.value === 'difficult') {
+              addLog('🔄 回到第一步，再次觉察');
+              currentStep = 0;
+              renderStep();
+            }
+          });
+          btnArea.appendChild(btn);
+        });
+      }
+    }
+    
+    function finishSession() {
+      currentStep = totalSteps;
+      updateDots();
+      progressText.textContent = '释放完成 ✨';
+      
+      cardArea.innerHTML = `
+        <div class="step-title" style="font-size:1.4rem;">🌅 释放完成</div>
+        <div class="step-question">
+          你刚刚完成了三步骤的释放。\n\n
+          觉察 → 看见想要 → 允许它\n\n
+          感受一下此刻的内在空间，\n
+          是否比刚才更加开阔、自在？\n\n
+          每一次允许，\n
+          都是一次放下。
+        </div>
+        <div class="emotion-hint">💡 随时随地，回到这三个问题</div>
+      `;
+      
+      btnArea.innerHTML = '';
+      
+      const restartBtn = document.createElement('button');
+      restartBtn.className = 'btn-primary';
+      restartBtn.textContent = '🔄 开始新一轮';
+      restartBtn.addEventListener('click', () => {
+        currentStep = 0;
+        addLog('🌟 开启新的释放练习');
+        renderStep();
+      });
+      btnArea.appendChild(restartBtn);
+      
+      const resetBtn = document.createElement('button');
+      resetBtn.className = 'btn-secondary btn-small';
+      resetBtn.textContent = '清空记录';
+      resetBtn.addEventListener('click', () => {
+        sessionLog = [];
+        currentStep = 0;
+        renderLog();
+        renderStep();
+      });
+      btnArea.appendChild(resetBtn);
+    }
+    
+    function resetSession() {
+      sessionLog = [];
+      currentStep = 0;
+      renderLog();
+      renderStep();
+    }
+    
+    resetSession();
+  })();
+</script>
+</body>
+</html>

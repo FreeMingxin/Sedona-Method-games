@@ -10,10 +10,10 @@ class ReminderApp:
         self.root.resizable(False, False)
 
         # 默认参数（单位：秒）
-        self.interval = tk.IntVar(value=30)      # 间隔时间
-        self.duration = tk.IntVar(value=3)       # 显示时间
+        self.interval = tk.IntVar(value=15)      # 间隔时间
+        self.duration = tk.IntVar(value=2)       # 显示时间
         self.max_count = tk.IntVar(value=0)      # 0 表示无限循环
-        self.opacity = tk.DoubleVar(value=0.85)
+        self.opacity = tk.DoubleVar(value=0.50)
 
         self.running = False
         self.current_reminder_thread = None
